@@ -31,36 +31,42 @@ public enum CocoaMQTTLoggerLevel: Int {
     case debug = 0, info, warning, error, off
 }
 
+public protocol LoggableFunc {
+     func log(level: CocoaMQTTLoggerLevel, message: String)
+}
+
+struct DefaultLoggableFunc: LoggableFunc {
+   func log(level: CocoaMQTTLoggerLevel, minLevel: CocoaMQTTLoggerLevel, message: String) {
+        guard level.rawValue >= minLevel.rawValue else { return }
+        print("CocoaMQTT(\(level)): \(message)")
+   }
+}
 
 open class CocoaMQTTLogger: NSObject {
     
     // Singleton
     public static var logger = CocoaMQTTLogger()
     public override init() { super.init() }
-
+    public var loggableFunc: LoggableFunc = DefaultLoggableFunc()
     // min level
     var minLevel: CocoaMQTTLoggerLevel = .warning
     
     // logs
-    open func log(level: CocoaMQTTLoggerLevel, message: String) {
-        guard level.rawValue >= minLevel.rawValue else { return }
-        print("CocoaMQTT(\(level)): \(message)")
-    }
     
     func debug(_ message: String) {
-        log(level: .debug, message: message)
+        loggableFunc.log(level: .debug, message: message)
     }
     
     func info(_ message: String) {
-        log(level: .info, message: message)
+        loggableFunc.log(level: .info, message: message)
     }
     
     func warning(_ message: String) {
-        log(level: .warning, message: message)
+        loggableFunc.log(level: .warning, message: message)
     }
     
     func error(_ message: String) {
-        log(level: .error, message: message)
+        loggableFunc.log(level: .error, message: message)
     }
     
 }
