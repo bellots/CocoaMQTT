@@ -35,7 +35,7 @@ public protocol LoggableFunc {
      func log(level: CocoaMQTTLoggerLevel, minLevel: CocoaMQTTLoggerLevel, message: String)
 }
 
-struct DefaultLoggableFunc: LoggableFunc {
+class LoggableFunc: NSObject {
     
    func log(level: CocoaMQTTLoggerLevel, minLevel: CocoaMQTTLoggerLevel, message: String) {
         guard level.rawValue >= minLevel.rawValue else { return }
@@ -48,7 +48,7 @@ open class CocoaMQTTLogger: NSObject {
     // Singleton
     public static var logger = CocoaMQTTLogger()
     public override init() { super.init() }
-    public var loggableFunc: LoggableFunc = DefaultLoggableFunc()
+    public var loggableFunc: LoggableFunc = LoggableFunc()
     // min level
     var minLevel: CocoaMQTTLoggerLevel = .warning
     
