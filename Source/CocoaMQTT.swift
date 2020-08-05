@@ -207,7 +207,7 @@ public class CocoaMQTT: NSObject, CocoaMQTTClient {
     
     /// Keep alive time interval
     public var keepAlive: UInt16 = 60
-	private var aliveTimer: CocoaMQTTTimer?
+    private var aliveTimer: CocoaMQTTTimer?
     
     /// Enable auto-reconnect mechanism
     public var autoReconnect = false
@@ -313,7 +313,7 @@ public class CocoaMQTT: NSObject, CocoaMQTTClient {
     }
     
     deinit {
-		aliveTimer?.suspend()
+        aliveTimer?.suspend()
         autoReconnTimer?.suspend()
         
         socket.setDelegate(nil, delegateQueue: nil)

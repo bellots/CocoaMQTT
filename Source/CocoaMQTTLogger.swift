@@ -31,13 +31,9 @@ public enum CocoaMQTTLoggerLevel: Int {
     case debug = 0, info, warning, error, off
 }
 
-public protocol LoggableFunc {
-     func log(level: CocoaMQTTLoggerLevel, minLevel: CocoaMQTTLoggerLevel, message: String)
-}
-
-class LoggableFunc: NSObject {
+open class LoggableFunc: NSObject {
     
-   func log(level: CocoaMQTTLoggerLevel, minLevel: CocoaMQTTLoggerLevel, message: String) {
+   open func log(level: CocoaMQTTLoggerLevel, minLevel: CocoaMQTTLoggerLevel, message: String) {
         guard level.rawValue >= minLevel.rawValue else { return }
         print("CocoaMQTT(\(level)): \(message)")
    }
