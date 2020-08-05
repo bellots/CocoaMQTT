@@ -239,6 +239,15 @@ public class CocoaMQTT: NSObject, CocoaMQTTClient {
         }
     }
     
+    public var loggableFunc: LoggableFunc {
+        get {
+            return CocoaMQTTLogger.logger.loggableFunc
+        }
+        set {
+            CocoaMQTTLogger.logger.loggableFunc = newValue
+        }
+    }
+
     /// Enable SSL connection
     public var enableSSL: Bool {
         get { return self.socket.enableSSL }
